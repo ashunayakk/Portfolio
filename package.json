@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@vercel/analytics": "^2.0.1",
+    "@anthropic-ai/sdk": "^0.110.0"
+  }
+}
