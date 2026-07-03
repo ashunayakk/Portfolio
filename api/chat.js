@@ -1,4 +1,5 @@
-const Anthropic = require('@anthropic-ai/sdk');
+const GEMINI_MODEL = 'gemini-2.5-flash-lite';
+const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent`;
 
 const RESUME_CONTEXT = `
 Name: Ashutosh Nayak
@@ -79,8 +80,6 @@ ${RESUME_CONTEXT}`;
 const MAX_MESSAGE_LENGTH = 1000;
 const MAX_HISTORY_TURNS = 8;
 
-const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
-
 module.exports = async (req, res) => {
   if (req.method !== 'POST') {
     res.setHeader('Allow', 'POST');
@@ -96,9 +95,15 @@ module.exports = async (req, res) => {
     return res.status(400).json({ error: 'message is too long' });
   }
 
-  let priorMessages = [];
+  const apiKey = process.env.GEMINI_API_KEY;
+  if (!apiKey) {
+    console.error('GEMINI_API_KEY is not set');
+    return res.status(500).json({ error: 'Something went wrong.' });
+  }
+
+  let priorContents = [];
   if (Array.isArray(history)) {
-    priorMessages = history
+    priorContents = history
       .filter(
         (m) =>
           m &&
@@ -107,29 +112,48 @@ module.exports = async (req, res) => {
           m.content.length <= MAX_MESSAGE_LENGTH
       )
       .slice(-MAX_HISTORY_TURNS * 2)
-      .map((m) => ({ role: m.role, content: m.content }));
+      .map((m) => ({
+        role: m.role === 'assistant' ? 'model' : 'user',
+        parts: [{ text: m.content }],
+      }));
   }
 
+  const contents = [...priorContents, { role: 'user', parts: [{ text: message.trim() }] }];
+
   try {
-    const response = await anthropic.messages.create({
-      model: 'claude-haiku-4-5',
-      max_tokens: 400,
-      system: SYSTEM_PROMPT,
-      messages: [...priorMessages, { role: 'user', content: message.trim() }],
+    const geminiRes = await fetch(GEMINI_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-goog-api-key': apiKey,
+      },
+      body: JSON.stringify({
+        contents,
+        systemInstruction: { parts: [{ text: SYSTEM_PROMPT }] },
+        generationConfig: { maxOutputTokens: 400 },
+      }),
     });
 
-    const reply = response.content
-      .filter((block) => block.type === 'text')
-      .map((block) => block.text)
-      .join('\n')
-      .trim();
+    if (!geminiRes.ok) {
+      const errText = await geminiRes.text();
+      console.error('Gemini API error:', geminiRes.status, errText);
+      const status = geminiRes.status === 429 ? 429 : 500;
+      return res.status(status).json({
+        error: status === 429 ? 'Too many requests, try again shortly.' : 'Something went wrong.',
+      });
+    }
+
+    const data = await geminiRes.json();
+    const parts = (data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts) || [];
+    const reply = parts.map((p) => p.text || '').join('').trim();
+
+    if (!reply) {
+      return res.status(200).json({ reply: "Sorry, I couldn't come up with a response — try rephrasing." });
+    }
 
     return res.status(200).json({ reply });
   } catch (err) {
     console.error('chat endpoint error:', err);
-    const status = err && err.status === 429 ? 429 : 500;
-    return res.status(status).json({
-      error: status === 429 ? 'Too many requests, try again shortly.' : 'Something went wrong.',
-    });
+    return res.status(500).json({ error: 'Something went wrong.' });
   }
 };
