@@ -1,0 +1,63 @@
+.card {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 0;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  overflow: hidden;
+  margin-bottom: 56px;
+}
+
+@media (max-width: 780px) {
+  .card {
+    grid-template-columns: 1fr;
+  }
+}
+
+.imageWrap {
+  position: relative;
+  min-height: 260px;
+  background: #e6dac6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.placeholder {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 32px;
+  color: rgba(34, 29, 23, 0.3);
+}
+
+.body {
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 14px;
+}
+
+.badge {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.title {
+  font-size: clamp(22px, 2.6vw, 30px);
+  line-height: 1.2;
+}
+
+.desc {
+  font-size: 14.5px;
+}
+
+.meta {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--ink2);
+}

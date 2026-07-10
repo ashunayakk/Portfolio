@@ -1,0 +1,64 @@
+.form {
+  max-width: 480px;
+  margin-top: 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.label {
+  font-family: var(--mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--bg);
+  opacity: 0.6;
+}
+
+.input,
+.textarea {
+  background: rgba(250, 249, 245, 0.06);
+  border: 1px solid rgba(250, 249, 245, 0.2);
+  border-radius: 10px;
+  padding: 12px 14px;
+  color: var(--bg);
+  font-size: 14px;
+}
+
+.input:focus,
+.textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.fieldError {
+  font-size: 12px;
+  color: #ff8a80;
+}
+
+.statusMessage {
+  font-size: 13.5px;
+}
+
+.statusMessage.success {
+  color: #8fd19e;
+}
+
+.statusMessage.error {
+  color: #ff8a80;
+}
+
+.submitRow {
+  margin-top: 4px;
+}

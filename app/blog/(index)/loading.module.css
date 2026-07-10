@@ -1,0 +1,64 @@
+.wrap {
+  padding-top: 180px;
+  padding-bottom: 100px;
+}
+
+.skeletonLine {
+  height: 20px;
+  border-radius: 6px;
+  background: var(--panel);
+  overflow: hidden;
+  position: relative;
+}
+
+.skeletonLine::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, var(--panel2), transparent);
+  animation: shimmer 1.4s infinite;
+}
+
+@keyframes shimmer {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 48px;
+}
+
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 680px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.card {
+  aspect-ratio: 4 / 5;
+  border-radius: 16px;
+  background: var(--panel);
+  overflow: hidden;
+  position: relative;
+}
+
+.card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, var(--panel2), transparent);
+  animation: shimmer 1.4s infinite;
+}

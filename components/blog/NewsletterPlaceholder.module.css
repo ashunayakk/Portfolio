@@ -1,0 +1,41 @@
+.wrap {
+  margin-top: 56px;
+  padding: 32px;
+  border-radius: 16px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  text-align: center;
+}
+
+.heading {
+  font-size: 20px;
+  margin-bottom: 8px;
+}
+
+.desc {
+  max-width: 440px;
+  margin: 0 auto 20px;
+  font-size: 14px;
+}
+
+.form {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.input {
+  padding: 11px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--bg);
+  color: var(--ink);
+  font-size: 14px;
+  min-width: 240px;
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--accent);
+}

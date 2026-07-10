@@ -1,0 +1,63 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum PostStatus {
+  DRAFT
+  PUBLISHED
+}
+
+model Post {
+  id           String     @id @default(cuid())
+  slug         String     @unique
+  title        String
+  description  String
+  content      String     @db.Text
+  /// Category slug — must match one of the slugs in lib/blog/categories.ts.
+  /// Kept as a plain string (validated at the application layer via zod)
+  /// rather than a Prisma enum so there is exactly one source of truth for
+  /// the category list, instead of an enum that has to be hand-kept in
+  /// sync with the TS side.
+  category     String
+  tags         String[]
+  coverImage   String?
+  status       PostStatus @default(DRAFT)
+  featured     Boolean    @default(false)
+  scheduledFor DateTime?
+  wordCount    Int        @default(0)
+  viewCount    Int        @default(0)
+  publishedAt  DateTime?
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  @@index([status, publishedAt])
+  @@index([category])
+}
+
+model Message {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  message   String   @db.Text
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@index([read, createdAt])
+}
+
+model PageView {
+  id        String   @id @default(cuid())
+  path      String
+  referrer  String?
+  visitorId String
+  createdAt DateTime @default(now())
+
+  @@index([createdAt])
+  @@index([path, createdAt])
+}

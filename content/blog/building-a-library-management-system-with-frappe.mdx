@@ -1,0 +1,97 @@
+---
+title: "Case Study: Building a Library Management System with Frappe"
+description: "How I designed a full-stack library ERP on the Frappe Framework — DocTypes, a member self-service portal, and automated fine calculation."
+coverImage: "/images/blog/library-case-study.png"
+category: "case-studies"
+tags: ["Frappe", "Case Study", "ERP"]
+author: "Ashutosh Nayak"
+publishedAt: "2026-04-18"
+updatedAt: "2026-06-20"
+featured: false
+---
+
+Library operations look simple from the outside — check a book out, check it back in — until you account for reservation queues, overdue fines, membership renewals, and the fact that none of it should require a staff member sitting at a desk all day. This case study walks through how I approached it on the Frappe Framework.
+
+## The challenge
+
+The existing process was entirely manual: a physical register for issues and returns, mental math for overdue fines, and no way for members to check book availability without calling. None of that scales past a small collection, and none of it survives staff turnover.
+
+## Data model first
+
+Before writing any UI, I mapped the full book lifecycle to DocTypes:
+
+| DocType | Purpose |
+| --- | --- |
+| `Library Book` | Catalog entry — title, author, ISBN, availability |
+| `Library Member` | Membership record, tier, expiry date |
+| `Book Issue` | An active or historical loan |
+| `Book Reservation` | A queued request when a book is unavailable |
+
+Getting this right early mattered more than any other decision — every workflow after this point is just state transitions between these four tables.
+
+## The member self-service portal
+
+Frappe's website framework lets you expose a subset of DocTypes as a portal without building a separate frontend app. Members log in, see their active loans and fines, and place reservations directly:
+
+```python
+# www/my-library/index.py
+import frappe
+
+def get_context(context):
+    member = frappe.session.user
+    context.issues = frappe.get_all(
+        "Book Issue",
+        filters={"member": member, "status": "Issued"},
+        fields=["book_title", "due_date", "fine_amount"],
+    )
+    context.reservations = frappe.get_all(
+        "Book Reservation",
+        filters={"member": member, "status": "Pending"},
+        fields=["book_title", "queue_position"],
+    )
+```
+
+## Automating the parts nobody wants to do by hand
+
+Fine calculation, expiry notifications, and reservation-queue advancement all run as scheduled background jobs rather than being triggered by staff action:
+
+```python
+def expire_memberships():
+    expired = frappe.get_all(
+        "Library Member",
+        filters={"expiry_date": ["<", frappe.utils.today()], "status": "Active"},
+    )
+    for member in expired:
+        frappe.db.set_value("Library Member", member.name, "status", "Expired")
+        frappe.sendmail(
+            recipients=[member.email],
+            subject="Your library membership has expired",
+            message="Please renew to continue borrowing books.",
+        )
+```
+
+## Reporting
+
+Staff needed a live view of overdue books without opening the desk manager app. A SQL-backed report doctype answers that directly against the database rather than looping through documents in Python, which matters once the catalog grows past a few thousand records:
+
+```sql
+SELECT
+  bi.name AS issue_id,
+  lb.title AS book_title,
+  lm.member_name,
+  bi.due_date,
+  DATEDIFF(CURDATE(), bi.due_date) AS days_overdue
+FROM `tabBook Issue` bi
+JOIN `tabLibrary Book` lb ON lb.name = bi.book
+JOIN `tabLibrary Member` lm ON lm.name = bi.member
+WHERE bi.status = 'Issued' AND bi.due_date < CURDATE()
+ORDER BY days_overdue DESC;
+```
+
+## Outcome
+
+The result is a working ERP-style system with real-time dashboards, role-based access control, and zero manual fine calculation. It's still evolving — reservation queue notifications and a mobile-friendly checkout flow are next.
+
+## What I'd do differently
+
+Model the reservation queue as an ordered list from day one. I initially tracked queue position as a plain integer field updated on every change, which works fine at low volume but creates race conditions under concurrent reservations — a proper queue table with atomic position updates would have avoided a rewrite.

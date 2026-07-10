@@ -1,0 +1,56 @@
+---
+title: "Prompt Engineering for Business AI Assistants"
+description: "How to design system prompts for LLM assistants that answer from a fixed knowledge base without hallucinating — lessons from building this site's own chatbot."
+coverImage: "/images/blog/prompt-engineering.png"
+category: "artificial-intelligence"
+tags: ["AI", "LLMs", "Prompt Engineering"]
+author: "Ashutosh Nayak"
+publishedAt: "2026-06-03"
+featured: false
+---
+
+The AI assistant on this portfolio's Contact section answers questions about my background using only the resume content on the page — no web search, no general knowledge. That constraint is the whole design problem: how do you keep an LLM from confidently making things up when it doesn't know the answer?
+
+## Ground the model in a fixed context, not instructions alone
+
+The naive approach is a system prompt that just says "only answer from what you know about Ashutosh." That's not grounding — it's a suggestion the model will happily ignore under ambiguity. The fix is to pass the actual source content as part of the system instruction, every request:
+
+```javascript
+const systemPrompt = `You answer visitor questions about Ashutosh's background
+using ONLY the resume information provided below. If asked something not
+covered by this information, say you don't have that detail.
+
+${resumeContext}`;
+```
+
+The resume context itself should be generated from the same structured data that renders the page — not hand-copied into a separate string. That second copy is where staleness bugs creep in: add a new project to the page, forget to update the chatbot's context, and now the assistant is confidently wrong about what you've built.
+
+## Keep the refusal path explicit
+
+Models are more likely to hallucinate when the prompt doesn't give them an easy, sanctioned way to say "I don't know." Naming the exact fallback behavior removes the ambiguity:
+
+```text
+If asked something not covered by this information, say you don't have
+that detail and suggest they email ashunayak6393@gmail.com. Never invent
+facts, employers, dates, or skills that aren't listed.
+```
+
+## Cap history, not just message length
+
+Multi-turn context matters for a conversational assistant, but unbounded history is both a cost problem and a drift problem — the model starts anchoring on earlier turns instead of the grounding context. Capping to the last N turns keeps the conversation coherent without letting it wander:
+
+```javascript
+const MAX_HISTORY_TURNS = 8;
+const priorContents = history.slice(-MAX_HISTORY_TURNS * 2);
+```
+
+## Test the refusal, not just the happy path
+
+Most prompt iteration time should go into questions the model *shouldn't* answer — "what's Ashutosh's salary expectation," "does he know Rust," anything outside the provided context. If the refusal path holds up under adversarial questions, the happy path usually takes care of itself.
+
+## A short checklist
+
+- Ground the model in the actual source data, not a hand-maintained duplicate.
+- Give the model an explicit, named way to say "I don't know."
+- Cap conversation history to avoid cost blowup and context drift.
+- Spend testing time on the refusal path, not the happy path.

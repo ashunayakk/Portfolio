@@ -1,0 +1,46 @@
+.wrap {
+  position: sticky;
+  top: 100px;
+  max-height: calc(100vh - 140px);
+  overflow-y: auto;
+}
+
+.label {
+  font-family: var(--mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink2);
+  margin-bottom: 12px;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border-left: 1px solid var(--line);
+}
+
+.item {
+  padding-left: 14px;
+  border-left: 2px solid transparent;
+  margin-left: -1px;
+}
+
+.itemDepth3 {
+  padding-left: 26px;
+}
+
+.link {
+  font-size: 13px;
+  color: var(--ink2);
+  display: block;
+}
+
+.item.active {
+  border-left-color: var(--accent);
+}
+
+.item.active .link {
+  color: var(--accent);
+}

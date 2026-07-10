@@ -1,0 +1,79 @@
+---
+title: "Five Python Habits That Made My Data Analysis Faster"
+description: "Small, practical Python and pandas habits that compound into real time savings when you're doing data analysis daily."
+coverImage: "/images/blog/python-data-analysis.png"
+category: "python"
+tags: ["Python", "Data Analytics", "SQL"]
+author: "Ashutosh Nayak"
+publishedAt: "2026-03-01"
+featured: false
+---
+
+None of these are advanced techniques. They're habits — the kind of thing that saves ten minutes a day and adds up over a year of building dashboards and reports.
+
+## 1. Push filtering into SQL, not pandas
+
+If the data is already in a database, filter it there. Pulling an entire table into a DataFrame and then calling `.query()` wastes both memory and time.
+
+```python
+import pandas as pd
+from sqlalchemy import create_engine
+
+engine = create_engine(DB_URL)
+df = pd.read_sql(
+    "SELECT * FROM sales WHERE region = %s AND closed_at >= %s",
+    engine,
+    params=(region, start_date),
+)
+```
+
+## 2. Use `categorical` dtype for anything low-cardinality
+
+Region names, status flags, product categories — anything with a small, repeating set of values should be a `category` dtype. It cuts memory usage and speeds up groupby operations on large frames.
+
+```python
+df["status"] = df["status"].astype("category")
+df["region"] = df["region"].astype("category")
+```
+
+## 3. Chain, don't reassign
+
+Pandas method chaining reads closer to the mental model of "transform this data" and avoids a pile of intermediate variables that are easy to lose track of.
+
+```python
+result = (
+    df
+    .query("status == 'Closed Won'")
+    .groupby("region", observed=True)["deal_value"]
+    .sum()
+    .sort_values(ascending=False)
+)
+```
+
+## 4. Write a `.env`-driven config module once
+
+Every analysis script eventually needs a database connection, an output path, and a couple of feature flags. Centralize it once instead of copy-pasting connection strings across notebooks:
+
+```python
+# config.py
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+DB_URL = os.environ["DATABASE_URL"]
+OUTPUT_DIR = os.environ.get("OUTPUT_DIR", "./reports")
+```
+
+## 5. Automate the report, not just the analysis
+
+If a report runs weekly, it should run itself. A simple cron entry beats "remembering" every time:
+
+```bash
+# crontab -e
+0 8 * * MON /usr/bin/python3 /opt/reports/weekly_sales.py
+```
+
+## The pattern behind all five
+
+Every one of these is about moving repeated work out of the moment you're doing analysis and into infrastructure you set up once. None of it is exciting, and that's the point — the goal is spending your attention on the analysis itself, not the plumbing around it.

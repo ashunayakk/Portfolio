@@ -1,0 +1,40 @@
+.wrap {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 40px;
+}
+
+@media (max-width: 680px) {
+  .wrap {
+    grid-template-columns: 1fr;
+  }
+}
+
+.card {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 16px 20px;
+  transition: border-color 0.3s ease;
+}
+
+.card:hover {
+  border-color: var(--accent);
+}
+
+.next {
+  text-align: right;
+}
+
+.label {
+  font-family: var(--mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  color: var(--ink2);
+  margin-bottom: 6px;
+}
+
+.title {
+  font-size: 14px;
+  font-weight: 600;
+}

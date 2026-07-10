@@ -1,0 +1,63 @@
+.header {
+  margin-bottom: 40px;
+}
+
+.degree {
+  font-size: clamp(24px, 2.8vw, 32px);
+  margin-top: 12px;
+  margin-bottom: 6px;
+}
+
+.institution {
+  color: var(--accent);
+  font-size: 14px;
+}
+
+.rows {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.row {
+  display: flex;
+  gap: 32px;
+  padding: 20px 0;
+  border-top: 1px solid var(--line);
+}
+
+@media (max-width: 680px) {
+  .row {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
+.rowLabel {
+  flex: 0 0 180px;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--ink2);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+@media (max-width: 680px) {
+  .rowLabel {
+    flex: 0 0 auto;
+  }
+}
+
+.rowItems {
+  flex: 1;
+  font-size: 14px;
+  color: var(--ink2);
+}
+
+.groupTitle {
+  font-family: var(--mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 28px 0 10px;
+}

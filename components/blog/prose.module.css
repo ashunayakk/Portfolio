@@ -1,0 +1,104 @@
+.prose {
+  font-size: 16.5px;
+  line-height: 1.75;
+  color: var(--ink2);
+  max-width: 680px;
+}
+
+.prose :global(h2) {
+  font-size: 26px;
+  margin-top: 48px;
+  margin-bottom: 16px;
+  scroll-margin-top: 100px;
+}
+
+.prose :global(h3) {
+  font-size: 20px;
+  margin-top: 36px;
+  margin-bottom: 12px;
+  scroll-margin-top: 100px;
+}
+
+.prose :global(h2 a),
+.prose :global(h3 a) {
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.prose :global(p) {
+  margin-bottom: 20px;
+  color: var(--ink2);
+}
+
+.prose :global(a:not(h2 a):not(h3 a)) {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.prose :global(ul),
+.prose :global(ol) {
+  margin: 0 0 20px 0;
+  padding-left: 24px;
+}
+
+.prose :global(ul) {
+  list-style: disc;
+}
+
+.prose :global(ol) {
+  list-style: decimal;
+}
+
+.prose :global(li) {
+  margin-bottom: 8px;
+}
+
+.prose :global(blockquote) {
+  border-left: 3px solid var(--accent);
+  padding-left: 20px;
+  margin: 24px 0;
+  color: var(--ink);
+  font-style: italic;
+}
+
+.prose :global(img) {
+  border-radius: 12px;
+  margin: 24px 0;
+}
+
+.prose :global(code):not(:global(pre code)) {
+  font-family: var(--mono);
+  font-size: 0.88em;
+  background: var(--panel2);
+  padding: 2px 6px;
+  border-radius: 4px;
+  color: var(--ink);
+}
+
+.prose :global(table) {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 24px 0;
+  font-size: 14px;
+}
+
+.prose :global(th),
+.prose :global(td) {
+  border: 1px solid var(--line);
+  padding: 8px 12px;
+  text-align: left;
+}
+
+.prose :global(th) {
+  background: var(--panel);
+  font-family: var(--mono);
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
+.prose :global(hr) {
+  border: none;
+  border-top: 1px solid var(--line);
+  margin: 40px 0;
+}

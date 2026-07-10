@@ -1,0 +1,143 @@
+.wrap {
+  position: relative;
+  width: 100%;
+  height: 440px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border-radius: 50%;
+  border: 1px dashed var(--line);
+  transform: translate(-50%, -50%);
+}
+
+.ringOutermost {
+  width: 340px;
+  height: 340px;
+}
+
+.ringOuter {
+  width: 260px;
+  height: 260px;
+}
+
+.ringInner {
+  width: 180px;
+  height: 180px;
+  border-style: solid;
+}
+
+.center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 78px;
+  height: 78px;
+  border-radius: 22px;
+  background: radial-gradient(circle at 30% 22%, rgba(255, 255, 255, 0.35), transparent 60%), var(--accent);
+  box-shadow: 0 12px 24px -8px var(--glow);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  animation: centerPulse 3s ease-in-out infinite;
+}
+
+@keyframes centerPulse {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.15);
+    opacity: 0.85;
+  }
+}
+
+.orbitSpin {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  animation: orbitSpin 40s linear infinite;
+}
+
+.orbitArm {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.orbitNode {
+  position: absolute;
+  animation: orbitCounterSpin 40s linear infinite;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.nodeCircle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--panel);
+  border: 1.5px solid var(--accent);
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nodeCircle.filled {
+  background: var(--accent);
+  color: #fff;
+  border-color: transparent;
+}
+
+.nodeLabel {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 11.5px;
+  color: var(--ink);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 3px 10px;
+  white-space: nowrap;
+}
+
+@keyframes orbitSpin {
+  from {
+    transform: rotate(var(--start-angle, 0deg));
+  }
+  to {
+    transform: rotate(calc(var(--start-angle, 0deg) + 360deg));
+  }
+}
+
+@keyframes orbitCounterSpin {
+  from {
+    transform: translate(-50%, -50%) rotate(calc(-1 * var(--start-angle, 0deg)));
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(calc(-1 * var(--start-angle, 0deg) - 360deg));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .orbitSpin,
+  .orbitNode,
+  .center {
+    animation: none;
+  }
+}
