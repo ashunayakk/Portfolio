@@ -62,6 +62,12 @@
   white-space: nowrap;
   max-width: 100%;
   overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.kicker::-webkit-scrollbar {
+  display: none;
 }
 
 @media (max-width: 640px) {
