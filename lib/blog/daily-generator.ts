@@ -4,11 +4,10 @@ import { CATEGORIES } from "./categories";
 import { isSlugTaken } from "./slug";
 import { slugify } from "@/lib/utils";
 import { wordCount } from "./reading-time";
+import { generateCoverImageBuffer } from "./cover-image";
 
 const GEMINI_TEXT_URL =
   "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent";
-const GEMINI_IMAGE_URL =
-  "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-image:generateContent";
 
 interface GeneratedPost {
   title: string;
@@ -16,12 +15,10 @@ interface GeneratedPost {
   category: string;
   tags: string[];
   content: string;
-  imagePrompt: string;
 }
 
 interface GeminiPart {
   text?: string;
-  inlineData?: { data: string; mimeType: string };
 }
 
 function requireApiKey(): string {
@@ -48,8 +45,7 @@ Return ONLY valid JSON matching this exact shape, no markdown fences, no comment
   "description": "1-2 sentences, under 160 characters, for SEO meta description",
   "category": "one of the exact category slugs listed above",
   "tags": ["3 to 5 short tags"],
-  "content": "the full article body in Markdown, with ## subheadings, at least 800 words",
-  "imagePrompt": "a short visual description, under 30 words, for an editorial cover illustration representing this post's topic, in flat minimalist vector style"
+  "content": "the full article body in Markdown, with ## subheadings, at least 800 words"
 }`;
 
   const res = await fetch(GEMINI_TEXT_URL, {
@@ -71,29 +67,6 @@ Return ONLY valid JSON matching this exact shape, no markdown fences, no comment
   return JSON.parse(text) as GeneratedPost;
 }
 
-async function generateCoverImage(imagePrompt: string): Promise<Buffer | null> {
-  const apiKey = requireApiKey();
-  const stylePrompt = `${imagePrompt}. Style: flat minimalist vector illustration, warm beige and terracotta-orange color palette, thin outline strokes, plenty of negative space, no text or letters anywhere in the image, editorial blog cover art.`;
-
-  const res = await fetch(GEMINI_IMAGE_URL, {
-    method: "POST",
-    headers: { "Content-Type": "application/json", "x-goog-api-key": apiKey },
-    body: JSON.stringify({ contents: [{ role: "user", parts: [{ text: stylePrompt }] }] }),
-  });
-
-  if (!res.ok) {
-    console.error("Gemini image generation failed:", res.status, await res.text());
-    return null;
-  }
-
-  const data = await res.json();
-  const parts: GeminiPart[] = data?.candidates?.[0]?.content?.parts ?? [];
-  const imagePart = parts.find((p) => p.inlineData);
-  if (!imagePart?.inlineData) return null;
-
-  return Buffer.from(imagePart.inlineData.data, "base64");
-}
-
 export async function generateDailyPost(): Promise<{ slug: string; title: string }> {
   const recent = await prisma.post.findMany({
     orderBy: { createdAt: "desc" },
@@ -110,24 +83,22 @@ export async function generateDailyPost(): Promise<{ slug: string; title: string
     suffix += 1;
   }
 
-  let coverImage: string | null = null;
-  try {
-    const imageBuffer = await generateCoverImage(generated.imagePrompt);
-    if (imageBuffer) {
-      const blob = await put(`blog/${slug}.png`, imageBuffer, {
-        access: "public",
-        contentType: "image/png",
-        addRandomSuffix: true,
-      });
-      coverImage = blob.url;
-    }
-  } catch (err) {
-    console.error("cover image generation failed, continuing without one:", err);
-  }
-
   const category = CATEGORIES.some((c) => c.slug === generated.category)
     ? generated.category
     : (CATEGORIES[0]?.slug ?? "artificial-intelligence");
+
+  let coverImage: string | null = null;
+  try {
+    const imageBuffer = await generateCoverImageBuffer(category);
+    const blob = await put(`blog/${slug}.png`, imageBuffer, {
+      access: "public",
+      contentType: "image/png",
+      addRandomSuffix: true,
+    });
+    coverImage = blob.url;
+  } catch (err) {
+    console.error("cover image generation failed, continuing without one:", err);
+  }
 
   const post = await prisma.post.create({
     data: {
