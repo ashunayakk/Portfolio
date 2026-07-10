@@ -5,7 +5,8 @@ import { isSlugTaken } from "./slug";
 import { slugify } from "@/lib/utils";
 import { wordCount } from "./reading-time";
 
-const GEMINI_TEXT_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent";
+const GEMINI_TEXT_URL =
+  "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent";
 const GEMINI_IMAGE_URL =
   "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-image:generateContent";
 
