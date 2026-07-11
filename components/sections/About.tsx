@@ -1,18 +1,13 @@
 import { ABOUT } from "@/lib/content/about";
 import { Reveal } from "@/components/effects/Reveal";
-import { AboutPhoto } from "./AboutPhoto";
 import styles from "./About.module.css";
 
 export function About() {
   return (
     <section id="about" className="section">
       <div className="container">
-        <div className={styles.grid}>
-          <Reveal>
-            <AboutPhoto src={ABOUT.photo} alt="Ashutosh Nayak" />
-          </Reveal>
-
-          <Reveal delay={100}>
+        <Reveal>
+          <div className={styles.content}>
             <p className="eyebrow">02 / About</p>
             <h2 className={styles.heading}>{ABOUT.heading}</h2>
             <div className={styles.paragraphs}>
@@ -28,8 +23,8 @@ export function About() {
                 </div>
               ))}
             </div>
-          </Reveal>
-        </div>
+          </div>
+        </Reveal>
       </div>
     </section>
   );

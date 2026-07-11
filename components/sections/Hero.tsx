@@ -1,7 +1,8 @@
 import { HERO } from "@/lib/content/hero";
+import { ABOUT } from "@/lib/content/about";
 import { WordRotator } from "@/components/effects/WordRotator";
 import { HeroCtaButton } from "./HeroCtaButton";
-import { OrbitDiagram } from "./OrbitDiagram";
+import { AboutPhoto } from "./AboutPhoto";
 import { SKILL_ICON_PATHS } from "./SkillIcon";
 import styles from "./Hero.module.css";
 
@@ -63,7 +64,7 @@ export function Hero() {
           </div>
 
           <div className={styles.panel}>
-            <OrbitDiagram />
+            <AboutPhoto src={ABOUT.photo} alt="Ashutosh Nayak" />
           </div>
         </div>
       </div>

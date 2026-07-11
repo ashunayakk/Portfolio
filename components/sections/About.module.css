@@ -1,14 +1,5 @@
-.grid {
-  display: grid;
-  grid-template-columns: 0.8fr 1.2fr;
-  gap: 56px;
-  align-items: center;
-}
-
-@media (max-width: 900px) {
-  .grid {
-    grid-template-columns: 1fr;
-  }
+.content {
+  max-width: 760px;
 }
 
 .photoWrap {

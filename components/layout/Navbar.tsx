@@ -4,8 +4,11 @@ import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { NAV_LINKS, NAV_CONTACT } from "@/lib/content/nav";
 import { ThemeSwitcher } from "./ThemeSwitcher";
+import { trackEvent } from "@/lib/analytics";
 import { cx } from "@/lib/utils";
 import styles from "./Navbar.module.css";
+
+const CV_HREF = "/docs/Ashutosh_Nayak_CV.pdf";
 
 function resolveHref(href: string, isHome: boolean): string {
   if (href.startsWith("#")) return isHome ? href : `/${href}`;
@@ -82,6 +85,14 @@ export function Navbar() {
 
         <div className={styles.right}>
           <ThemeSwitcher />
+          <a
+            href={CV_HREF}
+            download
+            className="btn btn-outline"
+            onClick={() => trackEvent("resume_download", { source: "navbar" })}
+          >
+            Resume
+          </a>
           <a href={resolveHref(NAV_CONTACT.href, isHome)} className="btn btn-dark">
             {NAV_CONTACT.label}
           </a>
@@ -111,6 +122,17 @@ export function Navbar() {
           ))}
           <a href={resolveHref(NAV_CONTACT.href, isHome)} className={styles.link} onClick={() => setOpen(false)}>
             {NAV_CONTACT.label}
+          </a>
+          <a
+            href={CV_HREF}
+            download
+            className={styles.link}
+            onClick={() => {
+              trackEvent("resume_download", { source: "navbar_mobile" });
+              setOpen(false);
+            }}
+          >
+            Resume
           </a>
           <ThemeSwitcher />
         </div>
