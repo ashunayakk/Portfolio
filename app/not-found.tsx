@@ -21,10 +21,8 @@ export default function NotFound() {
           </div>
 
           <p className={styles.digits}>404</p>
-          <h1 className={styles.heading}>Oops! Looks like you&apos;ve discovered an unimplemented route.</h1>
-          <p className={styles.sub}>
-            The page you&apos;re looking for doesn&apos;t exist, has been moved, or the URL is incorrect.
-          </p>
+          <h1 className={styles.heading}>Oops! The page you&apos;re looking for doesn&apos;t exist.</h1>
+          <p className={styles.sub}>Don&apos;t worry—let&apos;s get you back to building something amazing.</p>
 
           <div className={styles.actions}>
             <Link href="/" className="btn btn-primary">
