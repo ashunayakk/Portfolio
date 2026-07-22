@@ -1,19 +1,48 @@
+import type { Metadata } from "next";
 import Link from "next/link";
+import { FileX } from "lucide-react";
 import { Navbar } from "@/components/layout/Navbar";
+import { Reveal } from "@/components/effects/Reveal";
+import styles from "./not-found.module.css";
+
+export const metadata: Metadata = {
+  title: "404",
+  description: "The page you are looking for could not be found.",
+};
 
 export default function NotFound() {
   return (
     <>
       <Navbar />
-      <main className="container" style={{ paddingTop: 200, paddingBottom: 160, textAlign: "center" }}>
-        <p className="eyebrow" style={{ justifyContent: "center" }}>
-          404
-        </p>
-        <h1 style={{ fontSize: "clamp(28px, 4vw, 44px)", margin: "16px 0" }}>Page not found</h1>
-        <p style={{ marginBottom: 24 }}>The page you&apos;re looking for doesn&apos;t exist or was moved.</p>
-        <Link href="/" className="btn btn-primary">
-          ← Back home
-        </Link>
+      <main className={`container ${styles.main}`}>
+        <Reveal>
+          <div className={styles.iconRing} aria-hidden>
+            <FileX size={36} strokeWidth={1.5} />
+          </div>
+
+          <p className={styles.digits}>404</p>
+          <h1 className={styles.heading}>Oops! Looks like you&apos;ve discovered an unimplemented route.</h1>
+          <p className={styles.sub}>
+            The page you&apos;re looking for doesn&apos;t exist, has been moved, or the URL is incorrect.
+          </p>
+
+          <div className={styles.actions}>
+            <Link href="/" className="btn btn-primary">
+              ← Back to Portfolio
+            </Link>
+            <Link href="/work" className="btn btn-outline">
+              View Projects
+            </Link>
+            <Link href="/contact" className="btn btn-outline">
+              Contact Me
+            </Link>
+          </div>
+
+          <blockquote className={styles.quote}>
+            &ldquo;Every great product starts with fixing broken paths.&rdquo;
+            <cite className={styles.quoteAttribution}>— Ashutosh Nayak</cite>
+          </blockquote>
+        </Reveal>
       </main>
     </>
   );
