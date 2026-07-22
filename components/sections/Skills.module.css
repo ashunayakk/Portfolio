@@ -83,6 +83,12 @@
   font-size: 15px;
 }
 
+.teaserFooter {
+  display: flex;
+  justify-content: center;
+  margin-top: 32px;
+}
+
 .exploring {
   margin-top: 32px;
   display: flex;

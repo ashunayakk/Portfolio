@@ -1,8 +1,14 @@
+import Link from "next/link";
 import { CERTIFICATES, DOCUMENTS } from "@/lib/content/certificates";
 import { Reveal } from "@/components/effects/Reveal";
 import styles from "./Certificates.module.css";
 
-export function Certificates({ eyebrow = "06 / Certificates & credentials" }: { eyebrow?: string }) {
+interface CertificatesProps {
+  eyebrow?: string;
+  teaser?: boolean;
+}
+
+export function Certificates({ eyebrow = "06 / Certificates & credentials", teaser = false }: CertificatesProps) {
   return (
     <section id="certificates" className="section">
       <div className="container">
@@ -26,16 +32,32 @@ export function Certificates({ eyebrow = "06 / Certificates & credentials" }: { 
           ))}
         </div>
 
-        <Reveal delay={160}>
-          <div className={styles.docs}>
-            {DOCUMENTS.map((doc) => (
-              <a key={doc.label} href={doc.file} target="_blank" rel="noopener noreferrer" className={styles.docRow}>
-                <span>{doc.label}</span>
-                <span aria-hidden>↗</span>
-              </a>
-            ))}
-          </div>
-        </Reveal>
+        {teaser ? (
+          <Reveal delay={160}>
+            <div className={styles.teaserFooter}>
+              <Link href="/certificates" className="btn btn-outline">
+                View credentials →
+              </Link>
+            </div>
+          </Reveal>
+        ) : (
+          <Reveal delay={160}>
+            <div className={styles.docs}>
+              {DOCUMENTS.map((doc) => (
+                <a
+                  key={doc.label}
+                  href={doc.file}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={styles.docRow}
+                >
+                  <span>{doc.label}</span>
+                  <span aria-hidden>↗</span>
+                </a>
+              ))}
+            </div>
+          </Reveal>
+        )}
       </div>
     </section>
   );

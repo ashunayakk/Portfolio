@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { EXPERIENCE } from "@/lib/content/experience";
 import { HERO } from "@/lib/content/hero";
 import { Reveal } from "@/components/effects/Reveal";
@@ -6,7 +7,14 @@ import styles from "./Experience.module.css";
 
 const cvHref = HERO.ctas.find((c) => c.href.endsWith(".pdf"))?.href ?? "/docs/Ashutosh_Nayak_CV.pdf";
 
-export function Experience({ eyebrow = "04 / Experience" }: { eyebrow?: string }) {
+interface ExperienceProps {
+  eyebrow?: string;
+  limit?: number;
+}
+
+export function Experience({ eyebrow = "04 / Experience", limit }: ExperienceProps) {
+  const entries = limit ? EXPERIENCE.slice(0, limit) : EXPERIENCE;
+
   return (
     <section id="experience" className="section">
       <div className="container">
@@ -28,7 +36,7 @@ export function Experience({ eyebrow = "04 / Experience" }: { eyebrow?: string }
         </Reveal>
 
         <div className={styles.timeline}>
-          {EXPERIENCE.map((entry, i) => (
+          {entries.map((entry, i) => (
             <Reveal key={entry.title} delay={i * 80}>
               <div className={styles.entry}>
                 <div className={styles.roleLabel}>{entry.roleLabel}</div>
@@ -56,6 +64,16 @@ export function Experience({ eyebrow = "04 / Experience" }: { eyebrow?: string }
             </Reveal>
           ))}
         </div>
+
+        {limit && (
+          <Reveal delay={entries.length * 80}>
+            <div className={styles.teaserFooter}>
+              <Link href="/experience" className="btn btn-outline">
+                Full experience →
+              </Link>
+            </div>
+          </Reveal>
+        )}
       </div>
     </section>
   );

@@ -2,7 +2,7 @@ import dynamic from "next/dynamic";
 import { Navbar } from "@/components/layout/Navbar";
 import { Hero } from "@/components/sections/Hero";
 import { StatsMarquee } from "@/components/sections/StatsMarquee";
-import { Work } from "@/components/sections/Work";
+import { WorkTeaser } from "@/components/sections/WorkTeaser";
 import { About } from "@/components/sections/About";
 import { Skills } from "@/components/sections/Skills";
 import { Experience } from "@/components/sections/Experience";
@@ -43,12 +43,12 @@ export default function HomePage() {
       <main>
         <Hero />
         <StatsMarquee />
-        <Work />
-        <About />
-        <Skills />
-        <Experience />
-        <Education />
-        <Certificates />
+        <WorkTeaser />
+        <About teaser />
+        <Skills limit={6} />
+        <Experience limit={1} />
+        <Education teaser />
+        <Certificates teaser />
         <Contact />
       </main>
       <WhatsAppWidget />

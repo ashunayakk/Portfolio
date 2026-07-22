@@ -2,6 +2,10 @@
   margin-bottom: 40px;
 }
 
+.teaserFooter {
+  display: flex;
+}
+
 .degree {
   font-size: clamp(24px, 2.8vw, 32px);
   margin-top: 12px;

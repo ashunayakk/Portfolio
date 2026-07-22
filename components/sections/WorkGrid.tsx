@@ -90,13 +90,14 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
   );
 }
 
-export function WorkGrid() {
+export function WorkGrid({ limit }: { limit?: number } = {}) {
   const [selected, setSelected] = useState<Project | null>(null);
+  const projects = limit ? PROJECTS.slice(0, limit) : PROJECTS;
 
   return (
     <>
       <div className={styles.grid}>
-        {PROJECTS.map((project, i) => (
+        {projects.map((project, i) => (
           <Reveal key={project.slug} delay={(i % 3) * 80}>
             <button
               type="button"

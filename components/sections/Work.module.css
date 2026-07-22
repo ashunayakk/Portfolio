@@ -17,6 +17,12 @@
   gap: 24px;
 }
 
+.teaserFooter {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+}
+
 @media (max-width: 900px) {
   .grid {
     grid-template-columns: repeat(2, 1fr);

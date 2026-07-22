@@ -1,8 +1,14 @@
+import Link from "next/link";
 import { EDUCATION } from "@/lib/content/education";
 import { Reveal } from "@/components/effects/Reveal";
 import styles from "./Education.module.css";
 
-export function Education({ eyebrow = "05 / Education, core tech & coursework" }: { eyebrow?: string }) {
+interface EducationProps {
+  eyebrow?: string;
+  teaser?: boolean;
+}
+
+export function Education({ eyebrow = "05 / Education, core tech & coursework", teaser = false }: EducationProps) {
   return (
     <section id="education" className="section">
       <div className="container">
@@ -14,29 +20,41 @@ export function Education({ eyebrow = "05 / Education, core tech & coursework" }
           </div>
         </Reveal>
 
-        <Reveal delay={80}>
-          <div className={styles.groupTitle}>Core tech</div>
-          <div className={styles.rows}>
-            {EDUCATION.coreTech.map((row) => (
-              <div key={row.label} className={styles.row}>
-                <div className={styles.rowLabel}>{row.label}</div>
-                <div className={styles.rowItems}>{row.items.join(" · ")}</div>
+        {teaser ? (
+          <Reveal delay={80}>
+            <div className={styles.teaserFooter}>
+              <Link href="/education" className="btn btn-outline">
+                Details →
+              </Link>
+            </div>
+          </Reveal>
+        ) : (
+          <>
+            <Reveal delay={80}>
+              <div className={styles.groupTitle}>Core tech</div>
+              <div className={styles.rows}>
+                {EDUCATION.coreTech.map((row) => (
+                  <div key={row.label} className={styles.row}>
+                    <div className={styles.rowLabel}>{row.label}</div>
+                    <div className={styles.rowItems}>{row.items.join(" · ")}</div>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-        </Reveal>
+            </Reveal>
 
-        <Reveal delay={120}>
-          <div className={styles.groupTitle}>Coursework</div>
-          <div className={styles.rows}>
-            {EDUCATION.coursework.map((row) => (
-              <div key={row.label} className={styles.row}>
-                <div className={styles.rowLabel}>{row.label}</div>
-                <div className={styles.rowItems}>{row.items.join(" · ")}</div>
+            <Reveal delay={120}>
+              <div className={styles.groupTitle}>Coursework</div>
+              <div className={styles.rows}>
+                {EDUCATION.coursework.map((row) => (
+                  <div key={row.label} className={styles.row}>
+                    <div className={styles.rowLabel}>{row.label}</div>
+                    <div className={styles.rowItems}>{row.items.join(" · ")}</div>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-        </Reveal>
+            </Reveal>
+          </>
+        )}
       </div>
     </section>
   );

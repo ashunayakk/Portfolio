@@ -63,6 +63,11 @@
   border-top: 1px solid var(--line);
 }
 
+.teaserFooter {
+  display: flex;
+  justify-content: center;
+}
+
 .docRow {
   display: flex;
   align-items: center;

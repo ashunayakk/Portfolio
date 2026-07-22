@@ -6,14 +6,14 @@ import { Reveal } from "@/components/effects/Reveal";
 import { trackEvent } from "@/lib/analytics";
 import styles from "./Contact.module.css";
 
-export function Contact() {
+export function Contact({ eyebrow = "07 / Contact" }: { eyebrow?: string }) {
   const wa = waLink(CONTACT.whatsappNumber, CONTACT.whatsappMessage);
 
   return (
     <section id="contact" className={cx("section", styles.section)}>
       <div className="container">
         <Reveal>
-          <p className="eyebrow">07 / Contact</p>
+          <p className="eyebrow">{eyebrow}</p>
           <h2 className={styles.heading}>{CONTACT.heading}</h2>
           <p className={styles.paragraph}>{CONTACT.paragraph}</p>
 
