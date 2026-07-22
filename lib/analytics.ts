@@ -2,7 +2,6 @@ export type AnalyticsEvent =
   | "page_view"
   | "blog_view"
   | "resume_download"
-  | "resume_view"
   | "contact_form_submit"
   | "whatsapp_click"
   | "email_click"

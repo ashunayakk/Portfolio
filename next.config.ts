@@ -7,6 +7,15 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "*.public.blob.vercel-storage.com" },
     ],
   },
+  async redirects() {
+    return [
+      {
+        source: "/resume",
+        destination: "/docs/Ashutosh_Nayak_CV.pdf",
+        permanent: false,
+      },
+    ];
+  },
 };
 
 export default nextConfig;
