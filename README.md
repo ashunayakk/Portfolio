@@ -93,16 +93,16 @@ npm run seed:admin
 
 See `.env.local.example` for the full list with descriptions. Summary:
 
-| Variable | Required for | Notes |
-| --- | --- | --- |
-| `DATABASE_URL`, `DIRECT_URL` | DB-backed blog posts, contact form, admin dashboard | Neon Postgres — pooled + direct connection strings |
-| `AUTH_SECRET` | Admin login | `openssl rand -base64 33` |
-| `ADMIN_EMAIL`, `ADMIN_PASSWORD_HASH` | Admin login | Generate the hash with `npm run seed:admin` |
-| `GEMINI_API_KEY` | Resume chatbot | Free key at aistudio.google.com/api-keys |
-| `BLOB_READ_WRITE_TOKEN` | Image upload in the admin editor | From the Vercel Blob store settings |
-| `NEXT_PUBLIC_GA_ID` | Google Analytics 4 | Omit entirely to disable — no script loads without it |
-| `NEXT_PUBLIC_CLARITY_ID` | Microsoft Clarity | Same — omit to disable |
-| `NEXT_PUBLIC_SITE_URL` | Canonical URLs, sitemap, RSS, OG tags | Defaults to the production URL if unset |
+| Variable                                 | Required for                                        | Notes                                                  |
+| ---------------------------------------- | --------------------------------------------------- | ------------------------------------------------------ |
+| `DATABASE_URL`, `DIRECT_URL`         | DB-backed blog posts, contact form, admin dashboard | Neon Postgres — pooled + direct connection strings    |
+| `AUTH_SECRET`                          | Admin login                                         | `openssl rand -base64 33`                            |
+| `ADMIN_EMAIL`, `ADMIN_PASSWORD_HASH` | Admin login                                         | Generate the hash with`npm run seed:admin`           |
+| `GEMINI_API_KEY`                       | Resume chatbot                                      | Free key at aistudio.google.com/api-keys               |
+| `BLOB_READ_WRITE_TOKEN`                | Image upload in the admin editor                    | From the Vercel Blob store settings                    |
+| `NEXT_PUBLIC_GA_ID`                    | Google Analytics 4                                  | Omit entirely to disable — no script loads without it |
+| `NEXT_PUBLIC_CLARITY_ID`               | Microsoft Clarity                                   | Same — omit to disable                                |
+| `NEXT_PUBLIC_SITE_URL`                 | Canonical URLs, sitemap, RSS, OG tags               | Defaults to the production URL if unset                |
 
 ## Working with the blog
 
