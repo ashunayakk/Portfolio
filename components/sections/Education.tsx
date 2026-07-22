@@ -2,13 +2,13 @@ import { EDUCATION } from "@/lib/content/education";
 import { Reveal } from "@/components/effects/Reveal";
 import styles from "./Education.module.css";
 
-export function Education() {
+export function Education({ eyebrow = "05 / Education, core tech & coursework" }: { eyebrow?: string }) {
   return (
     <section id="education" className="section">
       <div className="container">
         <Reveal>
           <div className={styles.header}>
-            <p className="eyebrow">05 / Education, core tech & coursework</p>
+            <p className="eyebrow">{eyebrow}</p>
             <h2 className={styles.degree}>{EDUCATION.degree}</h2>
             <p className={styles.institution}>{EDUCATION.institution}</p>
           </div>

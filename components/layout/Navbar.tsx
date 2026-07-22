@@ -8,8 +8,6 @@ import { trackEvent } from "@/lib/analytics";
 import { cx } from "@/lib/utils";
 import styles from "./Navbar.module.css";
 
-const CV_HREF = "/docs/Ashutosh_Nayak_CV.pdf";
-
 function resolveHref(href: string, isHome: boolean): string {
   if (href.startsWith("#")) return isHome ? href : `/${href}`;
   return href;
@@ -85,12 +83,7 @@ export function Navbar() {
 
         <div className={styles.right}>
           <ThemeSwitcher />
-          <a
-            href={CV_HREF}
-            download
-            className="btn btn-outline"
-            onClick={() => trackEvent("resume_download", { source: "navbar" })}
-          >
+          <a href="/resume" className="btn btn-outline" onClick={() => trackEvent("resume_view", { source: "navbar" })}>
             Resume
           </a>
           <a href={resolveHref(NAV_CONTACT.href, isHome)} className="btn btn-dark">
@@ -124,11 +117,10 @@ export function Navbar() {
             {NAV_CONTACT.label}
           </a>
           <a
-            href={CV_HREF}
-            download
+            href="/resume"
             className={styles.link}
             onClick={() => {
-              trackEvent("resume_download", { source: "navbar_mobile" });
+              trackEvent("resume_view", { source: "navbar_mobile" });
               setOpen(false);
             }}
           >

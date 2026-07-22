@@ -3,13 +3,13 @@ import { Reveal } from "@/components/effects/Reveal";
 import { SkillIcon } from "./SkillIcon";
 import styles from "./Skills.module.css";
 
-export function Skills() {
+export function Skills({ eyebrow = "03 / What I do" }: { eyebrow?: string }) {
   return (
     <section id="services" className="section">
       <div className="container">
         <Reveal>
           <div className={styles.header}>
-            <p className="eyebrow">03 / What I do</p>
+            <p className="eyebrow">{eyebrow}</p>
             <h2 className={styles.heading}>Nine domains, one throughline: intelligent, data-driven systems.</h2>
           </div>
         </Reveal>

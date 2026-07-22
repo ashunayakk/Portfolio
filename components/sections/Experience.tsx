@@ -6,14 +6,14 @@ import styles from "./Experience.module.css";
 
 const cvHref = HERO.ctas.find((c) => c.href.endsWith(".pdf"))?.href ?? "/docs/Ashutosh_Nayak_CV.pdf";
 
-export function Experience() {
+export function Experience({ eyebrow = "04 / Experience" }: { eyebrow?: string }) {
   return (
     <section id="experience" className="section">
       <div className="container">
         <Reveal>
           <div className={styles.header}>
             <div>
-              <p className="eyebrow">04 / Experience</p>
+              <p className="eyebrow">{eyebrow}</p>
               <h2 className={styles.heading}>Where I&apos;ve done the work.</h2>
             </div>
             <TrackedLink

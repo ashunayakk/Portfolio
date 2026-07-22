@@ -2,13 +2,13 @@ import { CERTIFICATES, DOCUMENTS } from "@/lib/content/certificates";
 import { Reveal } from "@/components/effects/Reveal";
 import styles from "./Certificates.module.css";
 
-export function Certificates() {
+export function Certificates({ eyebrow = "06 / Certificates & credentials" }: { eyebrow?: string }) {
   return (
     <section id="certificates" className="section">
       <div className="container">
         <Reveal>
           <div className={styles.header}>
-            <p className="eyebrow">06 / Certificates & credentials</p>
+            <p className="eyebrow">{eyebrow}</p>
             <h2 className={styles.heading}>Verified, and ready to review.</h2>
             <p>Click any item to open the original certificate or document as a PDF.</p>
           </div>
