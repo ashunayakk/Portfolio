@@ -10,9 +10,10 @@ const cvHref = HERO.ctas.find((c) => c.href.endsWith(".pdf"))?.href ?? "/docs/As
 interface ExperienceProps {
   eyebrow?: string;
   limit?: number;
+  headingAs?: "h1" | "h2";
 }
 
-export function Experience({ eyebrow = "04 / Experience", limit }: ExperienceProps) {
+export function Experience({ eyebrow = "04 / Experience", limit, headingAs: Heading = "h2" }: ExperienceProps) {
   const entries = limit ? EXPERIENCE.slice(0, limit) : EXPERIENCE;
 
   return (
@@ -22,7 +23,7 @@ export function Experience({ eyebrow = "04 / Experience", limit }: ExperiencePro
           <div className={styles.header}>
             <div>
               <p className="eyebrow">{eyebrow}</p>
-              <h2 className={styles.heading}>Where I&apos;ve done the work.</h2>
+              <Heading className={styles.heading}>Where I&apos;ve done the work.</Heading>
             </div>
             <TrackedLink
               href={cvHref}

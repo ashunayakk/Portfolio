@@ -7,9 +7,10 @@ import styles from "./Skills.module.css";
 interface SkillsProps {
   eyebrow?: string;
   limit?: number;
+  headingAs?: "h1" | "h2";
 }
 
-export function Skills({ eyebrow = "03 / What I do", limit }: SkillsProps) {
+export function Skills({ eyebrow = "03 / What I do", limit, headingAs: Heading = "h2" }: SkillsProps) {
   const domains = limit ? SKILL_DOMAINS.slice(0, limit) : SKILL_DOMAINS;
 
   return (
@@ -18,7 +19,7 @@ export function Skills({ eyebrow = "03 / What I do", limit }: SkillsProps) {
         <Reveal>
           <div className={styles.header}>
             <p className="eyebrow">{eyebrow}</p>
-            <h2 className={styles.heading}>Nine domains, one throughline: intelligent, data-driven systems.</h2>
+            <Heading className={styles.heading}>Nine domains, one throughline: intelligent, data-driven systems.</Heading>
           </div>
         </Reveal>
 
@@ -34,6 +35,17 @@ export function Skills({ eyebrow = "03 / What I do", limit }: SkillsProps) {
                 </div>
                 <h3 className={styles.title}>{skill.title}</h3>
                 <p className={styles.desc}>{skill.description}</p>
+                {skill.liveLink && (
+                  <a
+                    href={skill.liveLink.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={styles.liveBadge}
+                  >
+                    <span className={styles.liveDot} aria-hidden />
+                    {skill.liveLink.label}
+                  </a>
+                )}
               </div>
             </Reveal>
           ))}

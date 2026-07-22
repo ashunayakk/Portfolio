@@ -6,16 +6,21 @@ import styles from "./Certificates.module.css";
 interface CertificatesProps {
   eyebrow?: string;
   teaser?: boolean;
+  headingAs?: "h1" | "h2";
 }
 
-export function Certificates({ eyebrow = "06 / Certificates & credentials", teaser = false }: CertificatesProps) {
+export function Certificates({
+  eyebrow = "06 / Certificates & credentials",
+  teaser = false,
+  headingAs: Heading = "h2",
+}: CertificatesProps) {
   return (
     <section id="certificates" className="section">
       <div className="container">
         <Reveal>
           <div className={styles.header}>
             <p className="eyebrow">{eyebrow}</p>
-            <h2 className={styles.heading}>Verified, and ready to review.</h2>
+            <Heading className={styles.heading}>Verified, and ready to review.</Heading>
             <p>Click any item to open the original certificate or document as a PDF.</p>
           </div>
         </Reveal>

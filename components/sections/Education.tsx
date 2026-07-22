@@ -6,16 +6,21 @@ import styles from "./Education.module.css";
 interface EducationProps {
   eyebrow?: string;
   teaser?: boolean;
+  headingAs?: "h1" | "h2";
 }
 
-export function Education({ eyebrow = "05 / Education, core tech & coursework", teaser = false }: EducationProps) {
+export function Education({
+  eyebrow = "05 / Education, core tech & coursework",
+  teaser = false,
+  headingAs: Heading = "h2",
+}: EducationProps) {
   return (
     <section id="education" className="section">
       <div className="container">
         <Reveal>
           <div className={styles.header}>
             <p className="eyebrow">{eyebrow}</p>
-            <h2 className={styles.degree}>{EDUCATION.degree}</h2>
+            <Heading className={styles.degree}>{EDUCATION.degree}</Heading>
             <p className={styles.institution}>{EDUCATION.institution}</p>
           </div>
         </Reveal>

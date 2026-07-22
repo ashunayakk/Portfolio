@@ -60,6 +60,7 @@ export interface SkillDomain {
   title: string;
   description: string;
   icon: string;
+  liveLink?: { label: string; href: string };
 }
 
 export interface ExperienceEntry {

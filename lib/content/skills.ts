@@ -30,6 +30,7 @@ export const SKILL_DOMAINS: SkillDomain[] = [
     title: "ERP / Frappe Development",
     description: "Custom ERPNext and CRM apps on the Frappe Framework — workflows, forms, reports and print formats.",
     icon: "grid",
+    liveLink: { label: "Live at Profezzo", href: "https://profezzo.com" },
   },
   {
     index: "06",

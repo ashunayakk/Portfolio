@@ -6,9 +6,10 @@ import styles from "./About.module.css";
 interface AboutProps {
   eyebrow?: string;
   teaser?: boolean;
+  headingAs?: "h1" | "h2";
 }
 
-export function About({ eyebrow = "02 / About", teaser = false }: AboutProps) {
+export function About({ eyebrow = "02 / About", teaser = false, headingAs: Heading = "h2" }: AboutProps) {
   const paragraphs = teaser ? ABOUT.paragraphs.slice(0, 1) : ABOUT.paragraphs;
 
   return (
@@ -17,7 +18,7 @@ export function About({ eyebrow = "02 / About", teaser = false }: AboutProps) {
         <Reveal>
           <div className={styles.content}>
             <p className="eyebrow">{eyebrow}</p>
-            <h2 className={styles.heading}>{ABOUT.heading}</h2>
+            <Heading className={styles.heading}>{ABOUT.heading}</Heading>
             <div className={styles.paragraphs}>
               {paragraphs.map((p, i) => (
                 <p key={i}>{p}</p>
