@@ -8,7 +8,7 @@ export const CONTACT: ContactContent = {
   phone: "+91 91317 06393",
   whatsappNumber: "919131706393",
   whatsappMessage: "Hi Ashutosh, I found your portfolio and wanted to connect.",
-  statusLine: "Open to Remote, Hybrid, Onsite & Freelance work · Replies within 24 hours",
+  statusLine: "Open to Remote, Hybrid, Onsite & Freelance work · Available immediately, no notice period · Replies within 24 hours",
   socials: [
     { label: "LinkedIn", href: "https://www.linkedin.com/in/ashunayakk/" },
     { label: "GitHub", href: "https://github.com/ashunayakk" },
