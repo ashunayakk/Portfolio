@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import nextDynamic from "next/dynamic";
 import { Navbar } from "@/components/layout/Navbar";
 import { About } from "@/components/sections/About";
@@ -22,6 +23,16 @@ export default function AboutPage() {
           <p className="eyebrow">About</p>
           <h1 className={styles.heading}>The person behind the projects.</h1>
           <p className={styles.sub}>Background, focus areas and how I work.</p>
+
+          <div className={styles.brandPlate}>
+            <Image
+              src="/images/brand/logo-plate.jpg"
+              alt="Ashutosh Nayak brand mark"
+              fill
+              sizes="(max-width: 480px) 90vw, 420px"
+              style={{ objectFit: "cover" }}
+            />
+          </div>
         </section>
 
         <About eyebrow="About" />
