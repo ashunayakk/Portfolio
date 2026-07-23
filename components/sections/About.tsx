@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { ABOUT } from "@/lib/content/about";
 import { Reveal } from "@/components/effects/Reveal";
 import styles from "./About.module.css";
@@ -9,11 +10,24 @@ interface AboutProps {
   headingAs?: "h1" | "h2";
 }
 
+const MARQUEE_REPEATS = Array.from({ length: 8 });
+
 export function About({ eyebrow = "02 / About", teaser = false, headingAs: Heading = "h2" }: AboutProps) {
   const paragraphs = teaser ? ABOUT.paragraphs.slice(0, 1) : ABOUT.paragraphs;
 
   return (
-    <section id="about" className="section">
+    <section id="about" className={`section ${styles.section}`}>
+      <div className={styles.bgMarqueeMask} aria-hidden>
+        <div className={styles.bgMarqueeTrack}>
+          {MARQUEE_REPEATS.map((_, i) => (
+            <span key={i} className={styles.bgMarqueeItem}>
+              Ashutosh Nayak
+              <Image src="/images/logo-mark.png" alt="" width={40} height={40} className={styles.bgMarqueeIcon} />
+            </span>
+          ))}
+        </div>
+      </div>
+
       <div className="container">
         <Reveal>
           <div className={styles.content}>

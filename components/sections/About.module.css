@@ -1,5 +1,62 @@
 .content {
   max-width: 760px;
+  position: relative;
+  z-index: 1;
+}
+
+.section {
+  position: relative;
+  overflow: hidden;
+}
+
+.bgMarqueeMask {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.bgMarqueeTrack {
+  display: flex;
+  width: max-content;
+  animation: aboutMarquee 40s linear infinite;
+}
+
+@keyframes aboutMarquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.bgMarqueeItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 32px;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: clamp(48px, 9vw, 120px);
+  white-space: nowrap;
+  color: var(--ink);
+  opacity: 0.04;
+  padding-inline: 32px;
+}
+
+.bgMarqueeIcon {
+  width: clamp(32px, 6vw, 72px);
+  height: clamp(32px, 6vw, 72px);
+  opacity: 0.4;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bgMarqueeTrack {
+    animation: none;
+  }
 }
 
 .photoWrap {
