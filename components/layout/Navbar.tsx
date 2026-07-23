@@ -38,7 +38,7 @@ export function Navbar() {
     <header className={cx(styles.nav, scrolled && styles.scrolled, open && styles.navOpen)}>
       <div className={cx("container", styles.inner)}>
         <a href={isHome ? "#top" : "/"} className={styles.logo}>
-          <Image src="/images/logo-mark.png" alt="" width={24} height={24} className={styles.logoMark} priority />
+          <Image src="/images/logo-mark.png" alt="" width={32} height={32} className={styles.logoMark} priority />
           Ashutosh Nayak
         </a>
 
