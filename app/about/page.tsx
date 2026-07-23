@@ -20,18 +20,22 @@ export default function AboutPage() {
       <Navbar />
       <main>
         <section className={`${styles.hero} container`}>
-          <p className="eyebrow">About</p>
-          <h1 className={styles.heading}>The person behind the projects.</h1>
-          <p className={styles.sub}>Background, focus areas and how I work.</p>
+          <div className={styles.heroGrid}>
+            <div>
+              <p className="eyebrow">About</p>
+              <h1 className={styles.heading}>The person behind the projects.</h1>
+              <p className={styles.sub}>Background, focus areas and how I work.</p>
+            </div>
 
-          <div className={styles.brandPlate}>
-            <Image
-              src="/images/brand/logo-plate.jpg"
-              alt="Ashutosh Nayak brand mark"
-              fill
-              sizes="(max-width: 480px) 90vw, 420px"
-              style={{ objectFit: "cover" }}
-            />
+            <div className={styles.brandPlate}>
+              <Image
+                src="/images/brand/logo-plate.jpg"
+                alt="Ashutosh Nayak brand mark"
+                fill
+                sizes="(max-width: 680px) 96px, 140px"
+                style={{ objectFit: "cover" }}
+              />
+            </div>
           </div>
         </section>
 
