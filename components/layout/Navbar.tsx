@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
+import Image from "next/image";
 import { NAV_LINKS, NAV_CONTACT } from "@/lib/content/nav";
 import { ThemeSwitcher } from "./ThemeSwitcher";
 import { trackEvent } from "@/lib/analytics";
@@ -37,7 +38,7 @@ export function Navbar() {
     <header className={cx(styles.nav, scrolled && styles.scrolled, open && styles.navOpen)}>
       <div className={cx("container", styles.inner)}>
         <a href={isHome ? "#top" : "/"} className={styles.logo}>
-          <span className={styles.logoDot} aria-hidden />
+          <Image src="/images/logo-mark.png" alt="" width={24} height={24} className={styles.logoMark} priority />
           Ashutosh Nayak
         </a>
 

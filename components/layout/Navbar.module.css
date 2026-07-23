@@ -33,12 +33,11 @@
   color: var(--ink);
 }
 
-.logoDot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--accent);
+.logoMark {
+  width: 24px;
+  height: 24px;
   flex-shrink: 0;
+  object-fit: contain;
 }
 
 
