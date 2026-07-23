@@ -4,6 +4,7 @@ import { CONTACT } from "@/lib/content/contact";
 import { waLink, cx } from "@/lib/utils";
 import { Reveal } from "@/components/effects/Reveal";
 import { trackEvent } from "@/lib/analytics";
+import { SocialIcon } from "./SocialIcon";
 import styles from "./Contact.module.css";
 
 interface ContactProps {
@@ -66,7 +67,8 @@ export function Contact({ eyebrow = "07 / Contact", headingAs: Heading = "h2" }:
                     if (social.label === "LinkedIn") trackEvent("linkedin_click", { source: "contact" });
                   }}
                 >
-                  {social.label} ↗
+                  <SocialIcon name={social.label} />
+                  {social.label}
                 </a>
               ))}
             </div>
