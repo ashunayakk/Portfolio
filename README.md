@@ -2,7 +2,7 @@
 
 Personal portfolio for Ashutosh Nayak — AI & ML Engineer, Business Analyst & Frappe Developer — rebuilt as a full Next.js 15 application with a blog, a private admin CMS, SEO, and analytics.
 
-Live at: https://ashutoshnayakk.vercel.app
+Live at: https://ashunayak.com
 
 ## Stack
 
